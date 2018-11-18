@@ -2,6 +2,7 @@
   "name": "ng-homework",
   "version": "0.0.0",
   "scripts": {
+    "deploy": "gh-pages -p dist",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -10,6 +11,7 @@
     "e2e": "ng e2e"
   },
   "private": true,
+  "homepage": "https://antr76.github.io/ng-homework-20181115",
   "dependencies": {
     "@angular/animations": "~7.0.0",
     "@angular/common": "~7.0.0",
@@ -29,10 +31,11 @@
     "@angular/cli": "~7.0.6",
     "@angular/compiler-cli": "~7.0.0",
     "@angular/language-service": "~7.0.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "gh-pages": "^2.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
