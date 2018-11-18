@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-# /dist - disable ignoring dist folder for being able to use github pages
+/dist
 /tmp
 /out-tsc
 
