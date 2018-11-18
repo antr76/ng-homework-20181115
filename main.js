@@ -193,7 +193,7 @@ var items = [
             name: 'Hotel 1',
             type: 'hotel',
             phone: '+1285 968 685',
-            url: '/assets/img/1.jpg',
+            url: 'assets/img/1.jpg',
             address: {
                 street: 'street',
                 houseNumber: '2',
@@ -204,7 +204,7 @@ var items = [
             name: 'Nam libero voluptatem',
             followers: 2850,
             following: 675,
-            url: '/assets/img/b1.jpg'
+            url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
@@ -218,7 +218,7 @@ var items = [
             name: 'Fishing 1',
             type: 'fishing',
             phone: '+1285 968 686',
-            url: '/assets/img/1.jpg',
+            url: 'assets/img/1.jpg',
             address: {
                 street: 'Munic street',
                 houseNumber: '3',
@@ -229,7 +229,7 @@ var items = [
             name: 'Nam libero voluptatem1',
             followers: 2851,
             following: 676,
-            url: '/assets/img/b1.jpg'
+            url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
@@ -243,7 +243,7 @@ var items = [
             name: 'Fishing 2',
             type: 'fishing',
             phone: '+1285 968 687',
-            url: '/assets/img/1.jpg',
+            url: 'assets/img/1.jpg',
             address: {
                 street: 'Munic street1',
                 houseNumber: '4',
@@ -254,7 +254,7 @@ var items = [
             name: 'Nam libero voluptatem2',
             followers: 2852,
             following: 677,
-            url: '/assets/img/b1.jpg'
+            url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
@@ -268,7 +268,7 @@ var items = [
             name: 'Tours 1',
             type: 'tours',
             phone: '+1285 968 688',
-            url: '/assets/img/1.jpg',
+            url: 'assets/img/1.jpg',
             address: {
                 street: 'Pforzheim street1',
                 houseNumber: '34',
@@ -279,7 +279,7 @@ var items = [
             name: 'Nam libero voluptatem3',
             followers: 2853,
             following: 678,
-            url: '/assets/img/b1.jpg'
+            url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem2',
@@ -302,7 +302,7 @@ items$.subscribe();
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"items[0].item.url\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5 (click)=\"selectItem(item)\">{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>Tel: {{item.item.phone}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='/assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='/assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"items[0].item.url\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5 (click)=\"selectItem(item)\">{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>Tel: {{item.item.phone}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
