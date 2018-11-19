@@ -7,7 +7,7 @@ const items: Item[] = [
         item: {
             name: 'Jumeirah Emirates Towers',
             type: 'hotel',
-            phone: '+1285 968 685',
+            phone: '128596832',
             url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
             address: {
                 street: 'Sheikh Zayed Road',
@@ -19,7 +19,7 @@ const items: Item[] = [
             name: 'Nam libero voluptatem',
             followers: 7850,
             following: 1675,
-            url: 'assets/img/b1.jpg'
+            url: 'assets/img/Jumeirah_Emirates_Towers.jpg'
         },
         weather: {
             name: 'Et harum quidem',
@@ -32,7 +32,7 @@ const items: Item[] = [
         item: {
             name: 'Park Hotel',
             type: 'hotel',
-            phone: '+4985 968 685',
+            phone: '49859680',
             url: 'assets/img/park-hotel.jpg',
             address: {
                 street: 'Richard-Wagner-Straße',
@@ -57,7 +57,7 @@ const items: Item[] = [
         item: {
             name: 'Black Marlin',
             type: 'fishing',
-            phone: '+1285 968 686',
+            phone: '12859686',
             url: 'assets/img/lizard-island.jpg',
             address: {
                 street: 'Lizard Island Australia',
@@ -82,7 +82,7 @@ const items: Item[] = [
         item: {
             name: 'Lake Alan Henry',
             type: 'fishing',
-            phone: '+1885 948 681',
+            phone: '188594869',
             url: 'assets/img/lake-alan-henry.jpg',
             address: {
                 street: 'Lake Alan Road',
@@ -107,7 +107,7 @@ const items: Item[] = [
         item: {
             name: 'Haggis Adventures',
             type: 'tours',
-            phone: '+1685 968 688',
+            phone: '16859686',
             url: 'assets/img/Haggis_Adventures.jpg',
             address: {
                 street: 'Adventures Road',
@@ -132,7 +132,7 @@ const items: Item[] = [
         item: {
             name: 'Busabout',
             type: 'tours',
-            phone: '+1155 468 688',
+            phone: '11554686',
             url: 'assets/img/Busabout.jpg',
             address: {
                 street: 'Busabout Street',

@@ -19,7 +19,7 @@
               <h5>{{item.item.name}}</h5>
               <p>{{item.item.address.street}}</p>
               <p>{{item.item.address.houseNumber}}</p>
-              <h6>Tel: {{item.item.phone}}</h6>
+              <h6>{{item.item.phone | phoneNumber}}</h6>
             </div>
             <div class="activity-img">
               <ul>
