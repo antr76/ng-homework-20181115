@@ -96,7 +96,7 @@ span.line {
   width: 103px;
   height: 2px;
   display: block;
-  margin: 0.6em auto 0em;
+  margin: 0.6em auto 0.3em;
 }
 span.w-line {
   background: url(assets/img/w-line.png)no-repeat;
@@ -196,6 +196,9 @@ ul li.anc-bor {
 .activity-row, .activity-row1{
   text-align: left;
 }
+.activity-row:hover {
+  cursor: pointer;
+}
 i.text-info{
   float: left;
   line-height: 60px;
@@ -208,18 +211,25 @@ i.text-info{
   display:inline-block;
 }
 .activity-desc h5{
-	color:#000;
-	font-size:1em;
+	color:#555;
+	font-size:0.9em;
 	font-weight:500;
-	margin-bottom: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
-.activity-desc h5 a{
+.activity-row:hover .activity-desc h5 {
+  color: #000;
+}
+.activity-desc h5:hover {
+  color: #000;
+}
+.activity-desc h5 a {
 	color:#000;
 }
 .activity-desc p{
 	color:#999;
-	font-size:0.94em;
-	line-height:1.7em;
+	font-size:0.8em;
+	line-height:1.5em;
 }
 .activity-desc h6 {
     color: #fd7b87;
@@ -228,13 +238,20 @@ i.text-info{
     font-weight: bold;
 }
 .activity-row{
-	margin-bottom:1em;
+  margin-bottom:0.4em;
+  padding: 0.3em;
+  padding-bottom: 0.6em;
+  margin-top: 0.2em;
+  border-bottom: 1px solid #ddd;
+}
+.activity-row:last-child {
+  border-bottom-width: 0;
 }
 .scrollbar{
 	max-height: 215px;
 	background:#fff;
 	overflow-y: scroll;
-       padding: 1em 1em 0em 1em;
+       padding: 0.6em 0.6em 0em 0.6em;
 }
 .activity_box{
   background: #fff;
@@ -275,7 +292,7 @@ i.text-info{
 /*--village start here--*/
 .village {
   background: #fff;
-  padding: 1.0em 1em;
+  padding: 0.8em 0.9em;
   border-radius: 0px 0px 5px 5px;
 }
 .village h3 {
