@@ -207,7 +207,7 @@ var items = [
             name: 'Nam libero voluptatem',
             followers: 7850,
             following: 1675,
-            url: 'assets/img/Jumeirah_Emirates_Towers.jpg'
+            url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
