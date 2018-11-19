@@ -136,12 +136,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./social-info/social-info.component */ "./src/app/social-info/social-info.component.ts");
 /* harmony import */ var _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./weather-info/weather-info.component */ "./src/app/weather-info/weather-info.component.ts");
 /* harmony import */ var _items_items_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./items/items.component */ "./src/app/items/items.component.ts");
+/* harmony import */ var _phone_number_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./phone-number.pipe */ "./src/app/phone-number.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -157,7 +159,8 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
                 _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_3__["SocialInfoComponent"],
                 _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_4__["WeatherInfoComponent"],
-                _items_items_component__WEBPACK_IMPORTED_MODULE_5__["ItemsComponent"]
+                _items_items_component__WEBPACK_IMPORTED_MODULE_5__["ItemsComponent"],
+                _phone_number_pipe__WEBPACK_IMPORTED_MODULE_6__["PhoneNumberPipe"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]
@@ -192,7 +195,7 @@ var items = [
         item: {
             name: 'Jumeirah Emirates Towers',
             type: 'hotel',
-            phone: '+1285 968 685',
+            phone: '128596832',
             url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
             address: {
                 street: 'Sheikh Zayed Road',
@@ -204,7 +207,7 @@ var items = [
             name: 'Nam libero voluptatem',
             followers: 7850,
             following: 1675,
-            url: 'assets/img/b1.jpg'
+            url: 'assets/img/Jumeirah_Emirates_Towers.jpg'
         },
         weather: {
             name: 'Et harum quidem',
@@ -217,7 +220,7 @@ var items = [
         item: {
             name: 'Park Hotel',
             type: 'hotel',
-            phone: '+4985 968 685',
+            phone: '49859680',
             url: 'assets/img/park-hotel.jpg',
             address: {
                 street: 'Richard-Wagner-Straße',
@@ -242,7 +245,7 @@ var items = [
         item: {
             name: 'Black Marlin',
             type: 'fishing',
-            phone: '+1285 968 686',
+            phone: '12859686',
             url: 'assets/img/lizard-island.jpg',
             address: {
                 street: 'Lizard Island Australia',
@@ -267,7 +270,7 @@ var items = [
         item: {
             name: 'Lake Alan Henry',
             type: 'fishing',
-            phone: '+1885 948 681',
+            phone: '188594869',
             url: 'assets/img/lake-alan-henry.jpg',
             address: {
                 street: 'Lake Alan Road',
@@ -292,7 +295,7 @@ var items = [
         item: {
             name: 'Haggis Adventures',
             type: 'tours',
-            phone: '+1685 968 688',
+            phone: '16859686',
             url: 'assets/img/Haggis_Adventures.jpg',
             address: {
                 street: 'Adventures Road',
@@ -317,7 +320,7 @@ var items = [
         item: {
             name: 'Busabout',
             type: 'tours',
-            phone: '+1155 468 688',
+            phone: '11554686',
             url: 'assets/img/Busabout.jpg',
             address: {
                 street: 'Busabout Street',
@@ -352,7 +355,7 @@ items$.subscribe();
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"imageUrl\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div (click)=\"selectItem(item)\" *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5>{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>Tel: {{item.item.phone}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"imageUrl\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div (click)=\"selectItem(item)\" *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5>{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>{{item.item.phone | phoneNumber}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -425,6 +428,47 @@ var ItemsComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], ItemsComponent);
     return ItemsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/phone-number.pipe.ts":
+/*!**************************************!*\
+  !*** ./src/app/phone-number.pipe.ts ***!
+  \**************************************/
+/*! exports provided: PhoneNumberPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhoneNumberPipe", function() { return PhoneNumberPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var PhoneNumberPipe = /** @class */ (function () {
+    function PhoneNumberPipe() {
+    }
+    PhoneNumberPipe.prototype.transform = function (value, args) {
+        if (value === void 0) { value = ''; }
+        var partOne = value.slice(0, 2);
+        var partTwo = value.slice(2, 5);
+        var partThree = value.slice(5, 8);
+        var partFour = value.slice(8, 11);
+        return "Tel: +" + partOne + " " + partTwo + " " + partThree + " " + partFour;
+    };
+    PhoneNumberPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({
+            name: 'phoneNumber'
+        })
+    ], PhoneNumberPipe);
+    return PhoneNumberPipe;
 }());
 
 
