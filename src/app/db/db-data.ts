@@ -5,43 +5,68 @@ import { Item } from '../models/item.model';
 const items: Item[] = [
     {
         item: {
-            name: 'Hotel 1',
+            name: 'Jumeirah Emirates Towers',
             type: 'hotel',
             phone: '+1285 968 685',
-            url: 'assets/img/1.jpg',
+            url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
             address: {
-                street: 'street',
-                houseNumber: '2',
-                city: 'city'
+                street: 'Sheikh Zayed Road',
+                houseNumber: '',
+                city: 'Dubai'
             }
         },
         social: {
             name: 'Nam libero voluptatem',
-            followers: 2850,
-            following: 675,
+            followers: 7850,
+            following: 1675,
             url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
-            waterTemperature: 14,
-            temperature: 20,
+            waterTemperature: 25,
+            temperature: 39,
             url: ''
         }
     },
     {
         item: {
-            name: 'Fishing 1',
-            type: 'fishing',
-            phone: '+1285 968 686',
-            url: 'assets/img/1.jpg',
+            name: 'Park Hotel',
+            type: 'hotel',
+            phone: '+4985 968 685',
+            url: 'assets/img/park-hotel.jpg',
             address: {
-                street: 'Munic street',
-                houseNumber: '3',
-                city: 'Munic'
+                street: 'Richard-Wagner-Straße',
+                houseNumber: '',
+                city: 'Leipzig'
             }
         },
         social: {
-            name: 'Nam libero voluptatem1',
+            name: 'Nam libero voluptatem',
+            followers: 1850,
+            following: 575,
+            url: 'assets/img/b1.jpg'
+        },
+        weather: {
+            name: 'Et harum quidem',
+            waterTemperature: 12,
+            temperature: 21,
+            url: ''
+        }
+    },
+    {
+        item: {
+            name: 'Black Marlin',
+            type: 'fishing',
+            phone: '+1285 968 686',
+            url: 'assets/img/lizard-island.jpg',
+            address: {
+                street: 'Lizard Island Australia',
+                houseNumber: '',
+                city: ''
+            }
+        },
+        social: {
+            name: 'Nam libero voluptatem',
             followers: 2851,
             following: 676,
             url: 'assets/img/b1.jpg'
@@ -55,51 +80,76 @@ const items: Item[] = [
     },
     {
         item: {
-            name: 'Fishing 2',
+            name: 'Lake Alan Henry',
             type: 'fishing',
-            phone: '+1285 968 687',
-            url: 'assets/img/1.jpg',
+            phone: '+1885 948 681',
+            url: 'assets/img/lake-alan-henry.jpg',
             address: {
-                street: 'Munic street1',
-                houseNumber: '4',
-                city: 'Munic'
+                street: 'Lake Alan Road',
+                houseNumber: '',
+                city: 'Texas'
             }
         },
         social: {
-            name: 'Nam libero voluptatem2',
-            followers: 2852,
-            following: 677,
+            name: 'Nam libero voluptatem',
+            followers: 4252,
+            following: 927,
             url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
-            waterTemperature: 17,
-            temperature: 28,
+            waterTemperature: 19,
+            temperature: 27,
             url: ''
         }
     },
     {
         item: {
-            name: 'Tours 1',
+            name: 'Haggis Adventures',
             type: 'tours',
-            phone: '+1285 968 688',
-            url: 'assets/img/1.jpg',
+            phone: '+1685 968 688',
+            url: 'assets/img/Haggis_Adventures.jpg',
             address: {
-                street: 'Pforzheim street1',
-                houseNumber: '34',
-                city: 'Pforzheim'
+                street: 'Adventures Road',
+                houseNumber: '',
+                city: 'Scotland'
             }
         },
         social: {
-            name: 'Nam libero voluptatem3',
-            followers: 2853,
-            following: 678,
+            name: 'Nam libero voluptatem',
+            followers: 1853,
+            following: 878,
             url: 'assets/img/b1.jpg'
         },
         weather: {
-            name: 'Et harum quidem2',
-            waterTemperature: 18,
-            temperature: 29,
+            name: 'Et harum quidem',
+            waterTemperature: 14,
+            temperature: 20,
+            url: ''
+        }
+    },
+    {
+        item: {
+            name: 'Busabout',
+            type: 'tours',
+            phone: '+1155 468 688',
+            url: 'assets/img/Busabout.jpg',
+            address: {
+                street: 'Busabout Street',
+                houseNumber: '',
+                city: 'Guernsey'
+            }
+        },
+        social: {
+            name: 'Nam libero voluptatem',
+            followers: 7853,
+            following: 1278,
+            url: 'assets/img/b1.jpg'
+        },
+        weather: {
+            name: 'Et harum quidem',
+            waterTemperature: 20,
+            temperature: 28,
             url: ''
         }
     }];
