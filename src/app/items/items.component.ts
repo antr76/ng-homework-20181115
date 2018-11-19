@@ -9,6 +9,7 @@ import { Item } from '../models/item.model';
 })
 export class ItemsComponent implements OnInit {
 
+  @Input() imageUrl: string;
   @Input() items: Item[];
 
   @Output() filterSelected: EventEmitter<string>;
@@ -27,7 +28,6 @@ export class ItemsComponent implements OnInit {
     this.itemSelected.emit(item);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

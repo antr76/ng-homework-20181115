@@ -1,12 +1,13 @@
 <h1>Hot Weather Widget powered by Angular + RxJS</h1>
-<div class="element">
-  <course-items *ngIf="true"
+<div class="element"
+      *ngIf="(selectedItem$ | async) as selectedItem">
+  <course-items
+      [imageUrl]="selectedItem.item.url"
       [items]="filteredItems$ | async"
       (filterSelected)="onFilterSelection($event)"
       (itemSelected)="onItemSelection($event)">
   </course-items>
-<div class="element-right" 
-    *ngIf="(selectedItem$ | async) as selectedItem">
+<div class="element-right">
   <course-weather-info 
       [weather]="selectedItem.weather">
   </course-weather-info>
