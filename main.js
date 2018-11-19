@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Hot Weather Widget powered by Angular + RxJS</h1>\n<div class=\"element\">\n  <course-items *ngIf=\"true\"\n      [items]=\"filteredItems$ | async\"\n      (filterSelected)=\"onFilterSelection($event)\"\n      (itemSelected)=\"onItemSelection($event)\">\n  </course-items>\n<div class=\"element-right\" \n    *ngIf=\"(selectedItem$ | async) as selectedItem\">\n  <course-weather-info \n      [weather]=\"selectedItem.weather\">\n  </course-weather-info>\n  <course-social-info\n      [social]=\"selectedItem.social\">\n  </course-social-info>\n</div>\n  <div class=\"clear\"> </div>\n</div>\n<div class=\"copy-right\">\n  <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href=\"http://w3layouts.com/\" target=\"_blank\">\n      W3layouts </a></p>\n</div>"
+module.exports = "<h1>Hot Weather Widget powered by Angular + RxJS</h1>\n<div class=\"element\"\n      *ngIf=\"(selectedItem$ | async) as selectedItem\">\n  <course-items\n      [imageUrl]=\"selectedItem.item.url\"\n      [items]=\"filteredItems$ | async\"\n      (filterSelected)=\"onFilterSelection($event)\"\n      (itemSelected)=\"onItemSelection($event)\">\n  </course-items>\n<div class=\"element-right\">\n  <course-weather-info \n      [weather]=\"selectedItem.weather\">\n  </course-weather-info>\n  <course-social-info\n      [social]=\"selectedItem.social\">\n  </course-social-info>\n</div>\n  <div class=\"clear\"> </div>\n</div>\n<div class=\"copy-right\">\n  <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href=\"http://w3layouts.com/\" target=\"_blank\">\n      W3layouts </a></p>\n</div>"
 
 /***/ }),
 
@@ -190,43 +190,68 @@ __webpack_require__.r(__webpack_exports__);
 var items = [
     {
         item: {
-            name: 'Hotel 1',
+            name: 'Jumeirah Emirates Towers',
             type: 'hotel',
             phone: '+1285 968 685',
-            url: 'assets/img/1.jpg',
+            url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
             address: {
-                street: 'street',
-                houseNumber: '2',
-                city: 'city'
+                street: 'Sheikh Zayed Road',
+                houseNumber: '',
+                city: 'Dubai'
             }
         },
         social: {
             name: 'Nam libero voluptatem',
-            followers: 2850,
-            following: 675,
+            followers: 7850,
+            following: 1675,
             url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
-            waterTemperature: 14,
-            temperature: 20,
+            waterTemperature: 25,
+            temperature: 39,
             url: ''
         }
     },
     {
         item: {
-            name: 'Fishing 1',
-            type: 'fishing',
-            phone: '+1285 968 686',
-            url: 'assets/img/1.jpg',
+            name: 'Park Hotel',
+            type: 'hotel',
+            phone: '+4985 968 685',
+            url: 'assets/img/park-hotel.jpg',
             address: {
-                street: 'Munic street',
-                houseNumber: '3',
-                city: 'Munic'
+                street: 'Richard-Wagner-Straße',
+                houseNumber: '',
+                city: 'Leipzig'
             }
         },
         social: {
-            name: 'Nam libero voluptatem1',
+            name: 'Nam libero voluptatem',
+            followers: 1850,
+            following: 575,
+            url: 'assets/img/b1.jpg'
+        },
+        weather: {
+            name: 'Et harum quidem',
+            waterTemperature: 12,
+            temperature: 21,
+            url: ''
+        }
+    },
+    {
+        item: {
+            name: 'Black Marlin',
+            type: 'fishing',
+            phone: '+1285 968 686',
+            url: 'assets/img/lizard-island.jpg',
+            address: {
+                street: 'Lizard Island Australia',
+                houseNumber: '',
+                city: ''
+            }
+        },
+        social: {
+            name: 'Nam libero voluptatem',
             followers: 2851,
             following: 676,
             url: 'assets/img/b1.jpg'
@@ -240,51 +265,76 @@ var items = [
     },
     {
         item: {
-            name: 'Fishing 2',
+            name: 'Lake Alan Henry',
             type: 'fishing',
-            phone: '+1285 968 687',
-            url: 'assets/img/1.jpg',
+            phone: '+1885 948 681',
+            url: 'assets/img/lake-alan-henry.jpg',
             address: {
-                street: 'Munic street1',
-                houseNumber: '4',
-                city: 'Munic'
+                street: 'Lake Alan Road',
+                houseNumber: '',
+                city: 'Texas'
             }
         },
         social: {
-            name: 'Nam libero voluptatem2',
-            followers: 2852,
-            following: 677,
+            name: 'Nam libero voluptatem',
+            followers: 4252,
+            following: 927,
             url: 'assets/img/b1.jpg'
         },
         weather: {
             name: 'Et harum quidem',
-            waterTemperature: 17,
-            temperature: 28,
+            waterTemperature: 19,
+            temperature: 27,
             url: ''
         }
     },
     {
         item: {
-            name: 'Tours 1',
+            name: 'Haggis Adventures',
             type: 'tours',
-            phone: '+1285 968 688',
-            url: 'assets/img/1.jpg',
+            phone: '+1685 968 688',
+            url: 'assets/img/Haggis_Adventures.jpg',
             address: {
-                street: 'Pforzheim street1',
-                houseNumber: '34',
-                city: 'Pforzheim'
+                street: 'Adventures Road',
+                houseNumber: '',
+                city: 'Scotland'
             }
         },
         social: {
-            name: 'Nam libero voluptatem3',
-            followers: 2853,
-            following: 678,
+            name: 'Nam libero voluptatem',
+            followers: 1853,
+            following: 878,
             url: 'assets/img/b1.jpg'
         },
         weather: {
-            name: 'Et harum quidem2',
-            waterTemperature: 18,
-            temperature: 29,
+            name: 'Et harum quidem',
+            waterTemperature: 14,
+            temperature: 20,
+            url: ''
+        }
+    },
+    {
+        item: {
+            name: 'Busabout',
+            type: 'tours',
+            phone: '+1155 468 688',
+            url: 'assets/img/Busabout.jpg',
+            address: {
+                street: 'Busabout Street',
+                houseNumber: '',
+                city: 'Guernsey'
+            }
+        },
+        social: {
+            name: 'Nam libero voluptatem',
+            followers: 7853,
+            following: 1278,
+            url: 'assets/img/b1.jpg'
+        },
+        weather: {
+            name: 'Et harum quidem',
+            waterTemperature: 20,
+            temperature: 28,
             url: ''
         }
     }
@@ -302,7 +352,7 @@ items$.subscribe();
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"items[0].item.url\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5 (click)=\"selectItem(item)\">{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>Tel: {{item.item.phone}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"element-left\">\n  <div class=\"element-bg-img\"><img [src]=\"imageUrl\" alt=\"\" class=\"img-responsive\"> </div>\n  <div class=\"element-left-bottom\">\n    <div class=\"ele-strip\">\n      <ul>\n          <li><a href=\"#\" (click)=\"selectFilter('all')\">All</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('hotel')\">Hotel</a></li>\n          <li><a href=\"#\" (click)=\"selectFilter('fishing')\">Fishing</a></li>\n          <li class=\"anc-bor\"><a href=\"#\" (click)=\"selectFilter('tours')\">Tours</a></li>\n      </ul>\n    </div>\n    <div class=\"village\">\n      <h3>Righteous indignation & like</h3>\n      <span class=\"line\"> </span>\n      <div class=\"activity_box\">\n        <div class=\"scrollbar\" id=\"style-2\">\n          <div (click)=\"selectItem(item)\" *ngFor=\"let item of items\" class=\"activity-row\">\n            <div class=\"activity-desc\">\n              <h5>{{item.item.name}}</h5>\n              <p>{{item.item.address.street}}</p>\n              <p>{{item.item.address.houseNumber}}</p>\n              <h6>Tel: {{item.item.phone}}</h6>\n            </div>\n            <div class=\"activity-img\">\n              <ul>\n                <li><img src='assets/img/res.jpg' alt=\"\" /></li>\n                <li><img src='assets/img/r1.jpg' alt=\"\" /></li>\n              </ul>\n            </div>\n            <div class=\"clear\"> </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -349,8 +399,11 @@ var ItemsComponent = /** @class */ (function () {
     ItemsComponent.prototype.selectItem = function (item) {
         this.itemSelected.emit(item);
     };
-    ItemsComponent.prototype.ngOnInit = function () {
-    };
+    ItemsComponent.prototype.ngOnInit = function () { };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ItemsComponent.prototype, "imageUrl", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
