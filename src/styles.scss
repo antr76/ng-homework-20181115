@@ -335,7 +335,7 @@ i.text-info{
   padding: 0em 0.8em;
 }
 .element-right {
-  width: 50%;
+  min-width: 250px;
 }
 .element {
   width: 43%;
@@ -355,7 +355,7 @@ i.text-info{
   width: 92%;
 }
 .element {
-  width: 44%;
+  width: 60%;
 }
 .temperatur {
     margin-bottom: 2.5em;
@@ -371,7 +371,7 @@ i.text-info{
 }
 @media(max-width:1024px){
 .element {
-  width: 58.5%;
+  width: 72.5%;
 }
 .temperatur {
     margin-bottom: 2.3em;
