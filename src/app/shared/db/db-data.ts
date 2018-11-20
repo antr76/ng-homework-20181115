@@ -155,5 +155,3 @@ const items: Item[] = [
     }];
 
 export const allItems$: Observable<Item[]> = of(items);
-
-allItems$.subscribe();
