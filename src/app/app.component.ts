@@ -28,5 +28,4 @@ export class AppComponent implements OnInit {
   handleItemSelection(selectedItem: Item): void {
     this.appService.setItemSelection(selectedItem);
   }
-
 }
