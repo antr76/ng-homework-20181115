@@ -6,6 +6,7 @@ import { SocialInfoComponent } from './social-info/social-info.component';
 import { WeatherInfoComponent } from './weather-info/weather-info.component';
 import { ItemsComponent } from './items/items.component';
 import { PhoneNumberPipe } from './phone-number.pipe';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { PhoneNumberPipe } from './phone-number.pipe';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    { provide: AppService, useClass: AppService }
+  ],
   bootstrap: [
     AppComponent
   ]

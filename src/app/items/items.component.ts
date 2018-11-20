@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Item } from '../models/item.model';
+import { Item } from '../shared/models/item.model';
 
 @Component({
   selector: 'course-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent {
 
   @Input() imageUrl: string;
   @Input() items: Item[];
@@ -27,7 +27,5 @@ export class ItemsComponent implements OnInit {
   selectItem(item: Item) {
     this.itemSelected.emit(item);
   }
-
-  ngOnInit() {}
 
 }

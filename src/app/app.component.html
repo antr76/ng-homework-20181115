@@ -4,8 +4,8 @@
   <course-items
       [imageUrl]="selectedItem.item.url"
       [items]="filteredItems$ | async"
-      (filterSelected)="onFilterSelection($event)"
-      (itemSelected)="onItemSelection($event)">
+      (filterSelected)="handleFilterSelection($event)"
+      (itemSelected)="handleItemSelection($event)">
   </course-items>
 <div class="element-right">
   <course-weather-info 

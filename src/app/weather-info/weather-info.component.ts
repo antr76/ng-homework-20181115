@@ -1,18 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { WeatherInfo } from '../models/weather-info.model';
+import { Component, Input } from '@angular/core';
+import { WeatherInfo } from '../shared/models/weather-info.model';
 
 @Component({
   selector: 'course-weather-info',
   templateUrl: './weather-info.component.html',
   styleUrls: ['./weather-info.component.scss']
 })
-export class WeatherInfoComponent implements OnInit {
+export class WeatherInfoComponent {
 
   @Input() weather: WeatherInfo;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }
