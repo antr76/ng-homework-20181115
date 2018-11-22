@@ -28,6 +28,15 @@ export class AppService {
     this.filterSubject.next(itemType);
   }
 
+  getDistinctFilter(): string[] {
+    return [
+      'All',
+      'Hotel',
+      'Fishing',
+      'Tours'
+    ];
+  }
+
   setItemSelection(selectedItem: Item): any {
     this.selectedItemSubject.next(selectedItem);
   }
@@ -70,7 +79,7 @@ export class AppService {
 
   private filterItems(itemType: string, allItems: Item[]): Item[] {
     const filteredItems = allItems.filter(
-      item => [item.item.type, 'all'].includes(itemType)
+      item => [item.item.type, 'all'].includes(itemType.toLowerCase())
     );
 
     return filteredItems;

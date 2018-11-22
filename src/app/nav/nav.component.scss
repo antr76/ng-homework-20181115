@@ -1,0 +1,24 @@
+ul {
+    text-align: center;
+}
+
+ul li {
+    display: inline-block;
+    padding: 0em 0.5em;
+    border-right: 1px solid #fff;
+
+    &:last-child {
+        border-right-color: transparent;
+    }
+}
+
+ul li a {
+    font-size:1em;
+    color: #fff;
+}
+
+:host {
+    background: #fda660;
+    padding: 1em 1em;
+    margin: -3px 0px 0px 0px;
+}

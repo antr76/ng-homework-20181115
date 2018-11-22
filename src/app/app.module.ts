@@ -5,8 +5,10 @@ import { AppComponent } from './app.component';
 import { SocialInfoComponent } from './social-info/social-info.component';
 import { WeatherInfoComponent } from './weather-info/weather-info.component';
 import { ItemsComponent } from './items/items.component';
-import { PhoneNumberPipe } from './phone-number.pipe';
+import { PhoneNumberPipe } from './items/phone-number.pipe';
 import { AppService } from './app.service';
+import { NavComponent } from './nav/nav.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { AppService } from './app.service';
     SocialInfoComponent,
     WeatherInfoComponent,
     ItemsComponent,
-    PhoneNumberPipe
+    PhoneNumberPipe,
+    NavComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule

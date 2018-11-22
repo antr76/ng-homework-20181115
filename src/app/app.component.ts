@@ -11,12 +11,17 @@ import { AppService } from './app.service';
 })
 export class AppComponent implements OnInit {
 
+  navItems: string[];
+
   selectedItem$: Observable<Item>;
   filteredItems$: Observable<Item[]>;
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService) {
+    this.navItems = appService.getDistinctFilter();
+  }
 
   ngOnInit() {
+    this.appService.getDistinctFilter();
     this.selectedItem$ = this.appService.selectedItem$;
     this.filteredItems$ = this.appService.filteredItems$;
   }

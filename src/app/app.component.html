@@ -1,23 +1,30 @@
 <h1>Hot Weather Widget powered by Angular + RxJS</h1>
-<div class="element"
-      *ngIf="(selectedItem$ | async) as selectedItem">
-  <course-items
-      [imageUrl]="selectedItem.item.url"
-      [items]="filteredItems$ | async"
-      (filterSelected)="handleFilterSelection($event)"
-      (itemSelected)="handleItemSelection($event)">
-  </course-items>
-<div class="element-right">
-  <course-weather-info 
-      [weather]="selectedItem.weather">
-  </course-weather-info>
-  <course-social-info
-      [social]="selectedItem.social">
-  </course-social-info>
-</div>
-  <div class="clear"> </div>
+<div class="container">
+    <ng-container *ngIf="(selectedItem$ | async) as selectedItem">
+        <div class="main-wrapper">
+            <course-image
+                [url]="selectedItem.item.url">
+            </course-image>
+            <course-nav
+                [items]="navItems"
+                (selected)="handleFilterSelection($event)">
+            </course-nav>
+            <course-items
+                [items]="filteredItems$ | async"
+                (itemSelected)="handleItemSelection($event)">
+            </course-items>
+        </div>
+        <div class="widgets-wrapper">
+            <course-weather-info
+                [weather]="selectedItem.weather">
+            </course-weather-info>
+            <course-social-info
+                [social]="selectedItem.social">
+            </course-social-info>
+        </div>
+    </ng-container>
 </div>
 <div class="copy-right">
-  <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href="http://w3layouts.com/" target="_blank">
-      W3layouts </a></p>
+    <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href="http://w3layouts.com/" target="_blank">
+            W3layouts </a></p>
 </div>

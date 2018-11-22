@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 
 import { Item } from '../models/item.model';
+import { delay } from 'rxjs/operators';
 
 const items: Item[] = [
     {
@@ -155,3 +156,4 @@ const items: Item[] = [
     }];
 
 export const allItems$: Observable<Item[]> = of(items);
+    // .pipe(delay(0));
