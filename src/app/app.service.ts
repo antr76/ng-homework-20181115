@@ -1,4 +1,4 @@
-import { Observable, BehaviorSubject, Subject, combineLatest, merge } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, combineLatest, merge, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, tap, shareReplay } from 'rxjs/operators';
 
 import { allItems$ } from './shared/db/db-data';
@@ -28,17 +28,37 @@ export class AppService {
     this.filterSubject.next(itemType);
   }
 
-  getDistinctFilter(): ItemType[] {
-    return [
-      'all',
-      'hotel',
-      'fishing',
-      'tours'
-    ];
+  getDistinctFilterItems(): ItemType[] {
+    let filterItems: ItemType[];
+
+    const sub: Subscription = allItems$
+      .pipe(
+        map(items => this.getItemTypes(items)),
+        // tap((data) => console.log('after map: ', data)),
+      )
+      .subscribe(
+        (items: ItemType[]) => filterItems = items
+      );
+      sub.unsubscribe();
+
+      const filterItemsSet = new Set<ItemType>(filterItems);
+      // Spreading does NOT function filterItems = [...filterItemsSet]
+      // I get a typescript error --downlevelIteration compiler option must be set!
+      // So I'm gonna use Array.from method instead.
+      const distinctFilterItems: ItemType[] = Array.from(filterItemsSet);
+
+      // Add filter item 'all' to the first position
+      distinctFilterItems.unshift('all');
+
+      return distinctFilterItems;
   }
 
   setItemSelection(selectedItem: Item): any {
     this.selectedItemSubject.next(selectedItem);
+  }
+
+  private getItemTypes(items: Item[]): ItemType[] {
+    return items.map((item: Item) => item.type);
   }
 
   private configureFilterStream(filter$: Observable<ItemType>, items$: Observable<Item[]>): void {

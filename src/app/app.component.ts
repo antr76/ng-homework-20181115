@@ -16,12 +16,10 @@ export class AppComponent implements OnInit {
   selectedItem$: Observable<Item>;
   filteredItems$: Observable<Item[]>;
 
-  constructor(private appService: AppService) {
-    this.navItems = appService.getDistinctFilter();
-  }
+  constructor(private appService: AppService) {}
 
   ngOnInit() {
-    this.appService.getDistinctFilter();
+    this.navItems = this.appService.getDistinctFilterItems();
     this.selectedItem$ = this.appService.selectedItem$;
     this.filteredItems$ = this.appService.filteredItems$;
   }
