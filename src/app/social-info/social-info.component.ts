@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SocialInfo } from '../shared/models/social-info.model';
+import { SocialInfo } from '../shared/interfaces/social-info.interface';
 
 @Component({
   selector: 'course-social-info',

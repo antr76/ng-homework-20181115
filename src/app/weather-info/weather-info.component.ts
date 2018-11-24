@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { WeatherInfo } from '../shared/models/weather-info.model';
+import { WeatherInfo } from '../shared/interfaces/weather-info.interface';
 
 @Component({
   selector: 'course-weather-info',

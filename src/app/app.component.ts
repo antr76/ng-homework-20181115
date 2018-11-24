@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Item } from './shared/models/item.model';
+import { Item, ItemType } from './shared/interfaces/item.interface';
 import { AppService } from './app.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 })
 export class AppComponent implements OnInit {
 
-  navItems: string[];
+  navItems: ItemType[];
 
   selectedItem$: Observable<Item>;
   filteredItems$: Observable<Item[]>;
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     this.filteredItems$ = this.appService.filteredItems$;
   }
 
-  handleFilterSelection(itemType: string): void {
+  handleFilterSelection(itemType: ItemType): void {
     this.appService.setFilterCriteria(itemType);
   }
 

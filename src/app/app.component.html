@@ -3,7 +3,7 @@
     <ng-container *ngIf="(selectedItem$ | async) as selectedItem">
         <div class="main-wrapper">
             <course-image
-                [url]="selectedItem.item.url">
+                [url]="selectedItem.url">
             </course-image>
             <course-nav
                 [items]="navItems"

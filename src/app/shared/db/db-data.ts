@@ -1,20 +1,17 @@
 import { Observable, of } from 'rxjs';
 
-import { Item } from '../models/item.model';
-import { delay } from 'rxjs/operators';
+import { Item } from '../interfaces/item.interface';
 
 const items: Item[] = [
     {
-        item: {
-            name: 'Jumeirah Emirates Towers',
-            type: 'hotel',
-            phone: '128596832',
-            url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
-            address: {
-                street: 'Sheikh Zayed Road',
-                houseNumber: '',
-                city: 'Dubai'
-            }
+        name: 'Jumeirah Emirates Towers',
+        type: 'hotel',
+        phone: '128596832',
+        url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
+        address: {
+            street: 'Sheikh Zayed Road',
+            houseNumber: '',
+            city: 'Dubai'
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -30,16 +27,14 @@ const items: Item[] = [
         }
     },
     {
-        item: {
-            name: 'Park Hotel',
-            type: 'hotel',
-            phone: '49859680',
-            url: 'assets/img/park-hotel.jpg',
-            address: {
-                street: 'Richard-Wagner-Straße',
-                houseNumber: '',
-                city: 'Leipzig'
-            }
+        name: 'Park Hotel',
+        type: 'hotel',
+        phone: '49859680',
+        url: 'assets/img/park-hotel.jpg',
+        address: {
+            street: 'Richard-Wagner-Straße',
+            houseNumber: '',
+            city: 'Leipzig'
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -55,16 +50,14 @@ const items: Item[] = [
         }
     },
     {
-        item: {
-            name: 'Black Marlin',
-            type: 'fishing',
-            phone: '12859686',
-            url: 'assets/img/lizard-island.jpg',
-            address: {
-                street: 'Lizard Island Australia',
-                houseNumber: '',
-                city: ''
-            }
+        name: 'Black Marlin',
+        type: 'fishing',
+        phone: '12859686',
+        url: 'assets/img/lizard-island.jpg',
+        address: {
+            street: 'Lizard Island Australia',
+            houseNumber: '',
+            city: ''
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -80,16 +73,14 @@ const items: Item[] = [
         }
     },
     {
-        item: {
-            name: 'Lake Alan Henry',
-            type: 'fishing',
-            phone: '188594869',
-            url: 'assets/img/lake-alan-henry.jpg',
-            address: {
-                street: 'Lake Alan Road',
-                houseNumber: '',
-                city: 'Texas'
-            }
+        name: 'Lake Alan Henry',
+        type: 'fishing',
+        phone: '188594869',
+        url: 'assets/img/lake-alan-henry.jpg',
+        address: {
+            street: 'Lake Alan Road',
+            houseNumber: '',
+            city: 'Texas'
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -105,16 +96,14 @@ const items: Item[] = [
         }
     },
     {
-        item: {
-            name: 'Haggis Adventures',
-            type: 'tours',
-            phone: '16859686',
-            url: 'assets/img/Haggis_Adventures.jpg',
-            address: {
-                street: 'Adventures Road',
-                houseNumber: '',
-                city: 'Scotland'
-            }
+        name: 'Haggis Adventures',
+        type: 'tours',
+        phone: '16859686',
+        url: 'assets/img/Haggis_Adventures.jpg',
+        address: {
+            street: 'Adventures Road',
+            houseNumber: '',
+            city: 'Scotland'
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -130,16 +119,14 @@ const items: Item[] = [
         }
     },
     {
-        item: {
-            name: 'Busabout',
-            type: 'tours',
-            phone: '11554686',
-            url: 'assets/img/Busabout.jpg',
-            address: {
-                street: 'Busabout Street',
-                houseNumber: '',
-                city: 'Guernsey'
-            }
+        name: 'Busabout',
+        type: 'tours',
+        phone: '11554686',
+        url: 'assets/img/Busabout.jpg',
+        address: {
+            street: 'Busabout Street',
+            houseNumber: '',
+            city: 'Guernsey'
         },
         social: {
             name: 'Nam libero voluptatem',
@@ -156,4 +143,4 @@ const items: Item[] = [
     }];
 
 export const allItems$: Observable<Item[]> = of(items);
-    // .pipe(delay(0));
+    // .pipe(delay(500));

@@ -2,19 +2,19 @@ import { Observable, BehaviorSubject, Subject, combineLatest, merge } from 'rxjs
 import { distinctUntilChanged, map, tap, shareReplay } from 'rxjs/operators';
 
 import { allItems$ } from './shared/db/db-data';
-import { Item } from './shared/models/item.model';
+import { Item, ItemType } from './shared/interfaces/item.interface';
 
 export class AppService {
 
   selectedItem$: Observable<Item>;
   filteredItems$: Observable<Item[]>;
 
-  private filterSubject: BehaviorSubject<string>;
+  private filterSubject: BehaviorSubject<ItemType>;
   private selectedItemSubject: Subject<Item>;
 
   constructor() {
-    this.filterSubject = new BehaviorSubject('all');
-    this.selectedItemSubject = new Subject();
+    this.filterSubject = new BehaviorSubject<ItemType>('all');
+    this.selectedItemSubject = new Subject<Item>();
 
     this.initialize();
   }
@@ -24,16 +24,16 @@ export class AppService {
     this.configureSelectedItemStream(this.filteredItems$, this.selectedItemSubject);
   }
 
-  setFilterCriteria(itemType: string): any {
+  setFilterCriteria(itemType: ItemType): any {
     this.filterSubject.next(itemType);
   }
 
-  getDistinctFilter(): string[] {
+  getDistinctFilter(): ItemType[] {
     return [
-      'All',
-      'Hotel',
-      'Fishing',
-      'Tours'
+      'all',
+      'hotel',
+      'fishing',
+      'tours'
     ];
   }
 
@@ -41,7 +41,7 @@ export class AppService {
     this.selectedItemSubject.next(selectedItem);
   }
 
-  private configureFilterStream(filter$: Observable<string>, items$: Observable<Item[]>): void {
+  private configureFilterStream(filter$: Observable<ItemType>, items$: Observable<Item[]>): void {
     const filterCombinedStream$ = combineLatest(
       filter$
         .pipe(
@@ -77,9 +77,9 @@ export class AppService {
       );
   }
 
-  private filterItems(itemType: string, allItems: Item[]): Item[] {
+  private filterItems(itemType: ItemType, allItems: Item[]): Item[] {
     const filteredItems = allItems.filter(
-      item => [item.item.type, 'all'].includes(itemType.toLowerCase())
+      item => [item.type, 'all'].includes(itemType.toLowerCase())
     );
 
     return filteredItems;
