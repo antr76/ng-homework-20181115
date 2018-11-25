@@ -1,5 +1,5 @@
 <ul>
     <li *ngFor="let item of items">
-      <a href="#" (click)="handleFilterSelection(item)">{{item}}</a>
+      <a href="#" (click)="handleFilterSelection(item)">{{item | titlecase}}</a>
     </li>
 </ul>
