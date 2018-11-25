@@ -5,18 +5,16 @@
     <div class="scrollbar" id="style-2">
       <div (click)="selectItem(item)" *ngFor="let item of items" class="activity-row">
         <div class="activity-desc">
-          <h5>{{item.name}}</h5>
-          <p>{{item.address.street}}</p>
-          <p>{{item.address.houseNumber}}</p>
-          <h6>{{item.phone | phoneNumber}}</h6>
+          <div class="content-wrapper">
+            <h5>{{item.name}}</h5>
+            <p>{{item.address.street}}</p>
+            <p>{{item.address.houseNumber}}</p>
+            <h6>{{item.phone | phoneNumber}}</h6>
+          </div>
         </div>
         <div class="activity-img">
-          <ul>
-            <li><img src='assets/img/res.jpg' alt="" /></li>
-            <li><img src='assets/img/r1.jpg' alt="" /></li>
-          </ul>
+            <img src='{{item.url}}'/>
         </div>
-        <div class="clear"> </div>
       </div>
     </div>
   </div>

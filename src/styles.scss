@@ -237,12 +237,15 @@ i.text-info{
     margin: 13px 0 0 0;
     font-weight: bold;
 }
-.activity-row{
+.activity-row {
   margin-bottom:0.4em;
   padding: 0.3em;
   padding-bottom: 0.6em;
   margin-top: 0.2em;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  box-sizing: border-box;
+  height: 130px;
 }
 .activity-row:last-child {
   border-bottom-width: 0;
@@ -275,19 +278,19 @@ i.text-info{
 	background-color:#fda660;
 }
 .activity-desc {
-    float: left;
-    width: 50%;
+  flex: 1;
+  display: flex;
 }
 .activity-img {
-    float: right;
-    width: 50%;
+  flex: 1;
+  display: flex;
 }
-.activity-img ul li {
-    display: inline-block;
-    margin-right: 10px;
-}
-.activity-img ul li img{
-    border-radius:50px;
+.activity-img img {
+    border-radius: 100%;
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    margin-right: 0;
 }
 /*--village start here--*/
 .village {
