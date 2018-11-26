@@ -5,10 +5,11 @@ import { AppComponent } from './app.component';
 import { SocialInfoComponent } from './social-info/social-info.component';
 import { WeatherInfoComponent } from './weather-info/weather-info.component';
 import { ItemsComponent } from './items/items.component';
-import { PhoneNumberPipe } from './items/phone-number.pipe';
+import { PhoneNumberPipe } from './items/item/phone-number.pipe';
 import { AppService } from './app.service';
 import { NavComponent } from './nav/nav.component';
 import { ImageComponent } from './image/image.component';
+import { ItemComponent } from './items/item/item.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ImageComponent } from './image/image.component';
     ItemsComponent,
     PhoneNumberPipe,
     NavComponent,
-    ImageComponent
+    ImageComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule

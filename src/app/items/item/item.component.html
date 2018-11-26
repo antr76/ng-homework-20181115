@@ -1,0 +1,10 @@
+<div (click)="handleSelection()" class="activity-row">
+  <div class="activity-desc">
+    <h5>{{item.name}}</h5>
+    <p>{{item.address.street}}</p>
+    <h6>{{item.phone | phoneNumber}}</h6>
+  </div>
+  <div class="activity-img">
+    <img src='{{item.url}}' />
+  </div>
+</div>
