@@ -1,10 +1,10 @@
 <div class="village">
-  <h3>Righteous indignation & like</h3>
+  <h3>{{selectedItem.name}}</h3>
   <span class="line"> </span>
   <div class="activity_box">
     <div class="scrollbar" id="style-1">
       <course-item 
-        [class.active-course]="isSelected(item)"
+        [class.active-item]="isSelected(item)"
         [item]="item" 
         (selected)="selectItem($event)" 
         *ngFor="let item of items">

@@ -10,6 +10,7 @@
                 (selected)="handleFilterSelection($event)">
             </course-nav>
             <course-items
+                [selectedItem]="selectedItem"
                 [items]="filteredItems$ | async"
                 (itemSelected)="handleItemSelection($event)">
             </course-items>

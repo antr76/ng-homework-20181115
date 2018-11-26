@@ -9,9 +9,8 @@ import { Item } from '../shared/interfaces/item.interface';
 })
 export class ItemsComponent {
 
-  private selectedItem: Item;
-
   @Input() items: Item[];
+  @Input() selectedItem: Item;
 
   @Output() itemSelected: EventEmitter<Item>;
 
@@ -20,7 +19,6 @@ export class ItemsComponent {
   }
 
   selectItem(item: Item) {
-    this.selectedItem = item;
     this.itemSelected.emit(item);
   }
 
