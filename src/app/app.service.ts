@@ -1,5 +1,5 @@
-import { Observable, BehaviorSubject, Subject, combineLatest, merge, Subscription } from 'rxjs';
-import { distinctUntilChanged, map, tap, shareReplay } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, combineLatest, Subscription } from 'rxjs';
+import { distinctUntilChanged, map, tap, merge, shareReplay } from 'rxjs/operators';
 
 import { allItems$ } from './shared/db/db-data';
 import { Item, ItemType } from './shared/interfaces/item.interface';
@@ -20,8 +20,10 @@ export class AppService {
   }
 
   initialize() {
-    this.configureFilterStream(this.filterSubject, allItems$);
-    this.configureSelectedItemStream(this.filteredItems$, this.selectedItemSubject);
+    this.filteredItems$ =
+      this.configureFilteredItemsStream(this.filterSubject, allItems$);
+    this.selectedItem$ =
+      this.configureSelectedItemStream(this.filteredItems$, this.selectedItemSubject);
   }
 
   setFilterCriteria(itemType: ItemType): any {
@@ -33,7 +35,7 @@ export class AppService {
 
     const sub: Subscription = allItems$
       .pipe(
-        map(items => this.getItemTypes(items)),
+        map(items => this.mapToItemTypes(items)),
         // tap((data) => console.log('after map: ', data)),
       )
       .subscribe(
@@ -57,12 +59,15 @@ export class AppService {
     this.selectedItemSubject.next(selectedItem);
   }
 
-  private getItemTypes(items: Item[]): ItemType[] {
+  private mapToItemTypes(items: Item[]): ItemType[] {
     return items.map((item: Item) => item.type);
   }
 
-  private configureFilterStream(filter$: Observable<ItemType>, items$: Observable<Item[]>): void {
-    const filterCombinedStream$ = combineLatest(
+  private prepareFilteredItemsStream(
+        filter$: Observable<ItemType>,
+        items$: Observable<Item[]>
+  ): Observable<{ itemType: ItemType, allItems: Item[] }> {
+    return combineLatest(
       filter$
         .pipe(
           distinctUntilChanged()
@@ -72,8 +77,14 @@ export class AppService {
         return { itemType, allItems };
       }
     );
+  }
 
-    this.filteredItems$ = filterCombinedStream$
+  private configureFilteredItemsStream(
+        filter$: Observable<ItemType>,
+        items$: Observable<Item[]>
+  ): Observable<Item[]> {
+
+    return this.prepareFilteredItemsStream(filter$, items$)
       .pipe(
         // tap((data) => console.log('before map: ', data)),
         map(data => this.filterItems(data.itemType, data.allItems)),
@@ -82,16 +93,25 @@ export class AppService {
       );
   }
 
-  private configureSelectedItemStream(items$: Observable<Item[]>, selectedItem$: Observable<Item>): void {
-    const firstItem$: Observable<Item> = items$
+  private configureFirstItemStream(
+        items$: Observable<Item[]>
+  ): Observable<Item> {
+    return items$
       .pipe(
         map(items => this.findItem(0, items)),
         distinctUntilChanged(),
         tap(firstItem => console.log('first item emitted new value: ', firstItem))
       );
+  }
 
-    this.selectedItem$ = merge(firstItem$, selectedItem$)
+  private configureSelectedItemStream(
+        items$: Observable<Item[]>,
+        selectedItem$: Observable<Item>
+  ): Observable<Item> {
+
+    return this.configureFirstItemStream(items$)
       .pipe(
+        merge(selectedItem$),
         distinctUntilChanged(),
         tap(selectedItem => console.log('selected item emitted new value: ', selectedItem))
       );
