@@ -14,6 +14,7 @@ import { PhoneNumberPipe } from './items/item/phone-number.pipe';
 import { NavComponent } from './nav/nav.component';
 import { ImageComponent } from './image/image.component';
 import { ItemComponent } from './items/item/item.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { ItemComponent } from './items/item/item.component';
     BrowserModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([ItemsEffects]),
-    StoreDevtoolsModule.instrument()
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   bootstrap: [
     AppComponent
