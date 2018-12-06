@@ -144,3 +144,5 @@ const items: Item[] = [
 
 export const allItems$: Observable<Item[]> = of(items);
     // .pipe(delay(500));
+
+export const allItems = items;
