@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, merge, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 
 import { Item, ItemType } from './shared/interfaces/item.interface';
 import { allItems$ } from './shared/db/db-data';
@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
     // For that purpose we are using the firstItem selector defined in the items.reducer.ts file.
     this.store.select(firstItem)
       .pipe(
+        filter(item => item !== undefined),
         tap(item => this.handleItemSelection(item))
       )
       .subscribe();
