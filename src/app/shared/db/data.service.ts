@@ -11,7 +11,7 @@ export class DataService {
     constructor(private http: HttpClient) {}
 
     getData(): Observable<Item[]> {
-        return this.http.get('/assets/json/items.json')
+        return this.http.get('assets/json/items.json')
         .pipe(
             pluck('items')
         );
