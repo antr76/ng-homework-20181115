@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap, switchMap, map, pluck, distinctUntilChanged, delay } from 'rxjs/operators';
+import { tap, switchMap, map, pluck, distinctUntilChanged } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 
+import { DataService } from '../../shared/db/data.service';
 import { Item, ItemType } from '../../shared/interfaces/item.interface';
-import { allItems } from '../../shared/db/db-data';
 import { LOAD_ITEMS_PENDING, FILTER_ITEMS, ItemsFiltered, LoadItemsSuccess } from '../actions/items.action';
 
 @Injectable()
 export class ItemsEffects {
 
-    private allItems: Item[] = allItems;
+    private allItems: Item[];
 
     // This effect dispatches LoadItemsSuccess action to the store.
     @Effect()
@@ -21,7 +21,7 @@ export class ItemsEffects {
     @Effect()
     itemsFiltered$: Observable<Action>;
 
-    constructor(private actions$: Actions) {
+    constructor(private actions$: Actions, private dataService: DataService) {
         this.initialize();
     }
 
@@ -55,9 +55,8 @@ export class ItemsEffects {
         return new ItemsFiltered(items);
     }
 
-    private loadItems() {
-        // todo retrieve items by using httpClient service
-        return of(allItems).pipe(delay(500));
+    private loadItems(): Observable<Item[]> {
+        return this.dataService.getData();
     }
 
     private filterItems(itemType: ItemType) {
