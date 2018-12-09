@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Hot Weather Widget powered by Angular + Store</h1>\n<div class=\"container\">\n    <ng-container *ngIf=\"(selectedItem$ | async) as selectedItem\">\n        <div class=\"main-wrapper\">\n            <course-image\n                [url]=\"selectedItem.url\">\n            </course-image>\n            <course-nav\n                [items]=\"navItems\"\n                (selected)=\"handleFilterSelection($event)\">\n            </course-nav>\n            <course-items\n                [selectedItem]=\"selectedItem\"\n                [items]=\"filteredItems$ | async\"\n                (itemSelected)=\"handleItemSelection($event)\">\n            </course-items>\n        </div>\n        <div class=\"widgets-wrapper\">\n            <course-weather-info\n                [weather]=\"selectedItem.weather\">\n            </course-weather-info>\n            <course-social-info\n                [social]=\"selectedItem.social\">\n            </course-social-info>\n        </div>\n    </ng-container>\n</div>\n<div class=\"copy-right\">\n    <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href=\"http://w3layouts.com/\" target=\"_blank\">\n            W3layouts </a></p>\n</div>"
+module.exports = "<h1>Hot Weather Widget powered by Angular + Store</h1>\n<div class=\"container\">\n    <ng-container *ngIf=\"(selectedItem$ | async) as selectedItem\">\n        <div class=\"main-wrapper\">\n            <course-image\n                [url]=\"selectedItem.url\">\n            </course-image>\n            <course-nav *ngIf=\"(allItems$ | async | navItems) as navItems\"\n                [items]=\"navItems\"\n                (selected)=\"handleFilterSelection($event)\">\n            </course-nav>\n            <course-items\n                [selectedItem]=\"selectedItem\"\n                [items]=\"filteredItems$ | async\"\n                (itemSelected)=\"handleItemSelection($event)\">\n            </course-items>\n        </div>\n        <div class=\"widgets-wrapper\">\n            <course-weather-info\n                [weather]=\"selectedItem.weather\">\n            </course-weather-info>\n            <course-social-info\n                [social]=\"selectedItem.social\">\n            </course-social-info>\n        </div>\n    </ng-container>\n</div>\n<div class=\"copy-right\">\n    <p>© 2015 Hot Weather Widget. All rights reserved | Design by <a href=\"http://w3layouts.com/\" target=\"_blank\">\n            W3layouts </a></p>\n</div>"
 
 /***/ }),
 
@@ -58,10 +58,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _shared_db_db_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/db/db-data */ "./src/app/shared/db/db-data.ts");
-/* harmony import */ var _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/actions/items.action */ "./src/app/store/actions/items.action.ts");
-/* harmony import */ var _store_actions_selected_item_action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/actions/selected-item.action */ "./src/app/store/actions/selected-item.action.ts");
-/* harmony import */ var _store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/reducers/items.reducer */ "./src/app/store/reducers/items.reducer.ts");
+/* harmony import */ var _store_actions_items_action__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/actions/items.action */ "./src/app/store/actions/items.action.ts");
+/* harmony import */ var _store_actions_selected_item_action__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/actions/selected-item.action */ "./src/app/store/actions/selected-item.action.ts");
+/* harmony import */ var _store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/reducers/items.reducer */ "./src/app/store/reducers/items.reducer.ts");
+/* harmony import */ var _shared_db_data_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/db/data.service */ "./src/app/shared/db/data.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -79,54 +79,39 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(store) {
+    function AppComponent(store, dataService) {
         this.store = store;
+        this.dataService = dataService;
     }
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
         // By default all items should be shown.
         // We dispatch LoadItemsPending action which retrieves
         // all items.
-        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["LoadItemsPending"]());
+        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_3__["LoadItemsPending"]());
+        // allItems$ is needed for calculating of navItems
+        // navItems a calculated by using navItems pipe.
+        this.allItems$ = this.dataService.getData();
         // Store contains already filtered items as the key 'items'
         this.filteredItems$ = this.store.select('items');
         // Store contains currently selected item as the key 'selectedItem'
         this.selectedItem$ = this.store.select('selectedItem');
-        // Each time when firstItem gets changed in the store
-        // (it happenes when the property items in the store gets changed)
-        // we dispatch the SelectItem action with that item.
-        // For that purpose we are using the firstItem selector defined in the items.reducer.ts file.
-        this.store.select(_store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_6__["firstItem"])
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (item) { return _this.handleItemSelection(item); }))
-            .subscribe();
-        this.navItems = this.getDistinctFilterItems();
+        // When firstItem gets changed in the store
+        // (it happenes when the property 'items' in the store gets changed)
+        // we dispatch the SelectItem action with that item as payload.
+        // For that purpose we are using the firstItem selector defined in the items reducer.
+        this.handleFirstItemChange(this.store.select(_store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_5__["firstItem"]), this.handleItemSelection.bind(this)).subscribe();
+    };
+    AppComponent.prototype.handleFirstItemChange = function (firstItem$, cbFn) {
+        return firstItem$
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["filter"])(function (item) { return item !== undefined; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (item) { return cbFn(item); }));
     };
     AppComponent.prototype.handleFilterSelection = function (itemType) {
         // If filter criteria has been changed we dispatch the FilterItems action
-        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["FilterItems"](itemType));
+        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_3__["FilterItems"](itemType));
     };
     AppComponent.prototype.handleItemSelection = function (selectedItem) {
         // If selected item has been changed we dispatch the SelectItem action
-        this.store.dispatch(new _store_actions_selected_item_action__WEBPACK_IMPORTED_MODULE_5__["SelectItem"](selectedItem));
-    };
-    AppComponent.prototype.getDistinctFilterItems = function () {
-        var _this = this;
-        var filterItems;
-        var sub = _shared_db_db_data__WEBPACK_IMPORTED_MODULE_3__["allItems$"]
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (items) { return _this.mapToItemTypes(items); }))
-            .subscribe(function (items) { return filterItems = items; });
-        sub.unsubscribe();
-        var filterItemsSet = new Set(filterItems);
-        // Spreading does NOT function filterItems = [...filterItemsSet]
-        // I get a typescript error --downlevelIteration compiler option must be set!
-        // So I'm gonna use Array.from method instead.
-        var distinctFilterItems = Array.from(filterItemsSet);
-        // Add filter item 'all' to the first position
-        distinctFilterItems.unshift('all');
-        return distinctFilterItems;
-    };
-    AppComponent.prototype.mapToItemTypes = function (items) {
-        return items.map(function (item) { return item.type; });
+        this.store.dispatch(new _store_actions_selected_item_action__WEBPACK_IMPORTED_MODULE_4__["SelectItem"](selectedItem));
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -134,7 +119,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["Store"]])
+        __metadata("design:paramtypes", [_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["Store"], _shared_db_data_service__WEBPACK_IMPORTED_MODULE_6__["DataService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -155,26 +140,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store-devtools */ "./node_modules/@ngrx/store-devtools/fesm5/store-devtools.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./src/app/store/index.ts");
-/* harmony import */ var _store_effects_items_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/effects/items.effects */ "./src/app/store/effects/items.effects.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./social-info/social-info.component */ "./src/app/social-info/social-info.component.ts");
-/* harmony import */ var _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./weather-info/weather-info.component */ "./src/app/weather-info/weather-info.component.ts");
-/* harmony import */ var _items_items_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./items/items.component */ "./src/app/items/items.component.ts");
-/* harmony import */ var _items_item_phone_number_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./items/item/phone-number.pipe */ "./src/app/items/item/phone-number.pipe.ts");
-/* harmony import */ var _nav_nav_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./nav/nav.component */ "./src/app/nav/nav.component.ts");
-/* harmony import */ var _image_image_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./image/image.component */ "./src/app/image/image.component.ts");
-/* harmony import */ var _items_item_item_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./items/item/item.component */ "./src/app/items/item/item.component.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
+/* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store-devtools */ "./node_modules/@ngrx/store-devtools/fesm5/store-devtools.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./src/app/store/index.ts");
+/* harmony import */ var _store_effects_items_effects__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/effects/items.effects */ "./src/app/store/effects/items.effects.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./social-info/social-info.component */ "./src/app/social-info/social-info.component.ts");
+/* harmony import */ var _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./weather-info/weather-info.component */ "./src/app/weather-info/weather-info.component.ts");
+/* harmony import */ var _items_items_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./items/items.component */ "./src/app/items/items.component.ts");
+/* harmony import */ var _items_item_phone_number_pipe__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./items/item/phone-number.pipe */ "./src/app/items/item/phone-number.pipe.ts");
+/* harmony import */ var _nav_nav_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./nav/nav.component */ "./src/app/nav/nav.component.ts");
+/* harmony import */ var _image_image_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./image/image.component */ "./src/app/image/image.component.ts");
+/* harmony import */ var _items_item_item_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./items/item/item.component */ "./src/app/items/item/item.component.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _shared_db_data_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./shared/db/data.service */ "./src/app/shared/db/data.service.ts");
+/* harmony import */ var _nav_items_pipe__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./nav-items.pipe */ "./src/app/nav-items.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -197,23 +188,28 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-                _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_8__["SocialInfoComponent"],
-                _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_9__["WeatherInfoComponent"],
-                _items_items_component__WEBPACK_IMPORTED_MODULE_10__["ItemsComponent"],
-                _items_item_phone_number_pipe__WEBPACK_IMPORTED_MODULE_11__["PhoneNumberPipe"],
-                _nav_nav_component__WEBPACK_IMPORTED_MODULE_12__["NavComponent"],
-                _image_image_component__WEBPACK_IMPORTED_MODULE_13__["ImageComponent"],
-                _items_item_item_component__WEBPACK_IMPORTED_MODULE_14__["ItemComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"],
+                _social_info_social_info_component__WEBPACK_IMPORTED_MODULE_9__["SocialInfoComponent"],
+                _weather_info_weather_info_component__WEBPACK_IMPORTED_MODULE_10__["WeatherInfoComponent"],
+                _items_items_component__WEBPACK_IMPORTED_MODULE_11__["ItemsComponent"],
+                _items_item_phone_number_pipe__WEBPACK_IMPORTED_MODULE_12__["PhoneNumberPipe"],
+                _nav_items_pipe__WEBPACK_IMPORTED_MODULE_18__["NavItemsPipe"],
+                _nav_nav_component__WEBPACK_IMPORTED_MODULE_13__["NavComponent"],
+                _image_image_component__WEBPACK_IMPORTED_MODULE_14__["ImageComponent"],
+                _items_item_item_component__WEBPACK_IMPORTED_MODULE_15__["ItemComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forRoot(_store__WEBPACK_IMPORTED_MODULE_5__["reducers"]),
-                _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["EffectsModule"].forRoot([_store_effects_items_effects__WEBPACK_IMPORTED_MODULE_6__["ItemsEffects"]]),
-                !_environments_environment__WEBPACK_IMPORTED_MODULE_15__["environment"].production ? _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_4__["StoreDevtoolsModule"].instrument() : []
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+                _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["StoreModule"].forRoot(_store__WEBPACK_IMPORTED_MODULE_6__["reducers"]),
+                _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forRoot([_store_effects_items_effects__WEBPACK_IMPORTED_MODULE_7__["ItemsEffects"]]),
+                !_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].production ? _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_5__["StoreDevtoolsModule"].instrument() : []
+            ],
+            providers: [
+                _shared_db_data_service__WEBPACK_IMPORTED_MODULE_17__["DataService"]
             ],
             bootstrap: [
-                _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]
             ]
         })
     ], AppModule);
@@ -482,6 +478,55 @@ var ItemsComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/nav-items.pipe.ts":
+/*!***********************************!*\
+  !*** ./src/app/nav-items.pipe.ts ***!
+  \***********************************/
+/*! exports provided: NavItemsPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavItemsPipe", function() { return NavItemsPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NavItemsPipe = /** @class */ (function () {
+    function NavItemsPipe() {
+    }
+    NavItemsPipe.prototype.transform = function (allItems) {
+        return this.getNavItems(allItems);
+    };
+    NavItemsPipe.prototype.getNavItems = function (items) {
+        items = items || [];
+        var navItemsSet = new Set();
+        // Fill the set with the filter types
+        items.forEach(function (item) { return navItemsSet.add(item.type); });
+        // Spreading does NOT function filterItems = [...filterItemsSet]
+        // I get a typescript error --downlevelIteration compiler option must be set!
+        // So I'm gonna use Array.from method instead.
+        var navItems = Array.from(navItemsSet);
+        // Add filter item 'all' to the first position
+        navItems.unshift('all');
+        return navItems;
+    };
+    NavItemsPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({
+            name: 'navItems'
+        })
+    ], NavItemsPipe);
+    return NavItemsPipe;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/nav/nav.component.html":
 /*!****************************************!*\
   !*** ./src/app/nav/nav.component.html ***!
@@ -555,162 +600,46 @@ var NavComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/shared/db/db-data.ts":
-/*!**************************************!*\
-  !*** ./src/app/shared/db/db-data.ts ***!
-  \**************************************/
-/*! exports provided: allItems$, allItems */
+/***/ "./src/app/shared/db/data.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/shared/db/data.service.ts ***!
+  \*******************************************/
+/*! exports provided: DataService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allItems$", function() { return allItems$; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allItems", function() { return allItems; });
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
-var items = [
-    {
-        name: 'Jumeirah Emirates Towers',
-        type: 'hotel',
-        phone: '128596832',
-        url: 'assets/img/Jumeirah_Emirates_Towers.jpg',
-        address: {
-            street: 'Sheikh Zayed Road',
-            houseNumber: '',
-            city: 'Dubai'
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 7850,
-            following: 1675,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 25,
-            temperature: 39,
-            url: ''
-        }
-    },
-    {
-        name: 'Park Hotel',
-        type: 'hotel',
-        phone: '49859680',
-        url: 'assets/img/park-hotel.jpg',
-        address: {
-            street: 'Richard-Wagner-Straße',
-            houseNumber: '',
-            city: 'Leipzig'
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 1850,
-            following: 575,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 12,
-            temperature: 21,
-            url: ''
-        }
-    },
-    {
-        name: 'Black Marlin',
-        type: 'fishing',
-        phone: '12859686',
-        url: 'assets/img/lizard-island.jpg',
-        address: {
-            street: 'Lizard Island Australia',
-            houseNumber: '',
-            city: ''
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 2851,
-            following: 676,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 16,
-            temperature: 27,
-            url: ''
-        }
-    },
-    {
-        name: 'Lake Alan Henry',
-        type: 'fishing',
-        phone: '188594869',
-        url: 'assets/img/lake-alan-henry.jpg',
-        address: {
-            street: 'Lake Alan Road',
-            houseNumber: '',
-            city: 'Texas'
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 4252,
-            following: 927,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 19,
-            temperature: 27,
-            url: ''
-        }
-    },
-    {
-        name: 'Haggis Adventures',
-        type: 'tours',
-        phone: '16859686',
-        url: 'assets/img/Haggis_Adventures.jpg',
-        address: {
-            street: 'Adventures Road',
-            houseNumber: '',
-            city: 'Scotland'
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 1853,
-            following: 878,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 14,
-            temperature: 20,
-            url: ''
-        }
-    },
-    {
-        name: 'Busabout',
-        type: 'tours',
-        phone: '11554686',
-        url: 'assets/img/Busabout.jpg',
-        address: {
-            street: 'Busabout Street',
-            houseNumber: '',
-            city: 'Guernsey'
-        },
-        social: {
-            name: 'Nam libero voluptatem',
-            followers: 7853,
-            following: 1278,
-            url: 'assets/img/b1.jpg'
-        },
-        weather: {
-            name: 'Et harum quidem',
-            waterTemperature: 20,
-            temperature: 28,
-            url: ''
-        }
+
+
+var DataService = /** @class */ (function () {
+    function DataService(http) {
+        this.http = http;
     }
-];
-var allItems$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(items);
-// .pipe(delay(500));
-var allItems = items;
+    DataService.prototype.getData = function () {
+        return this.http.get('/assets/json/items.json')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('items'));
+    };
+    DataService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], DataService);
+    return DataService;
+}());
+
 
 
 /***/ }),
@@ -873,7 +802,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var _shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/db/db-data */ "./src/app/shared/db/db-data.ts");
+/* harmony import */ var _shared_db_data_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/db/data.service */ "./src/app/shared/db/data.service.ts");
 /* harmony import */ var _actions_items_action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/items.action */ "./src/app/store/actions/items.action.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -891,9 +820,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ItemsEffects = /** @class */ (function () {
-    function ItemsEffects(actions$) {
+    function ItemsEffects(actions$, dataService) {
         this.actions$ = actions$;
-        this.allItems = _shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__["allItems"];
+        this.dataService = dataService;
         this.initialize();
     }
     ItemsEffects.prototype.initialize = function () {
@@ -912,8 +841,7 @@ var ItemsEffects = /** @class */ (function () {
         return new _actions_items_action__WEBPACK_IMPORTED_MODULE_5__["ItemsFiltered"](items);
     };
     ItemsEffects.prototype.loadItems = function () {
-        // todo retrieve items by using httpClient service
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(_shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__["allItems"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["delay"])(500));
+        return this.dataService.getData();
     };
     ItemsEffects.prototype.filterItems = function (itemType) {
         var items = this.allItems;
@@ -929,7 +857,7 @@ var ItemsEffects = /** @class */ (function () {
     ], ItemsEffects.prototype, "itemsFiltered$", void 0);
     ItemsEffects = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Actions"]])
+        __metadata("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Actions"], _shared_db_data_service__WEBPACK_IMPORTED_MODULE_4__["DataService"]])
     ], ItemsEffects);
     return ItemsEffects;
 }());
