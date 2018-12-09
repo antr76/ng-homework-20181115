@@ -1,11 +1,12 @@
 import { createSelector } from '@ngrx/store';
 
+import { AppState } from '..';
 import { Item } from '../../shared/interfaces/item.interface';
 import { ITEMS_FILTERED, LOAD_ITEMS_SUCCESS } from '../actions/items.action';
 
 const initialState: Item[] = [];
 
-export function itemsReducer(state = initialState, action: any) {
+export function itemsReducer(state: Item[] = initialState, action: any): Item[] {
     switch (action.type) {
         case LOAD_ITEMS_SUCCESS:
         case ITEMS_FILTERED:
@@ -15,7 +16,7 @@ export function itemsReducer(state = initialState, action: any) {
     }
 }
 
-const filteredItemsSelector = (state: any) => state.items;
+const filteredItemsSelector = (state: AppState) => state.items;
 
 export const firstItem = createSelector(
     filteredItemsSelector,
