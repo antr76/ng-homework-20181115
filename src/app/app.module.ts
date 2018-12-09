@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -15,6 +16,8 @@ import { NavComponent } from './nav/nav.component';
 import { ImageComponent } from './image/image.component';
 import { ItemComponent } from './items/item/item.component';
 import { environment } from '../environments/environment';
+import { DataService } from './shared/db/data.service';
+import { NavItemsPipe } from './nav-items.pipe';
 
 @NgModule({
   declarations: [
@@ -23,15 +26,20 @@ import { environment } from '../environments/environment';
     WeatherInfoComponent,
     ItemsComponent,
     PhoneNumberPipe,
+    NavItemsPipe,
     NavComponent,
     ImageComponent,
     ItemComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([ItemsEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
+  ],
+  providers: [
+    DataService
   ],
   bootstrap: [
     AppComponent

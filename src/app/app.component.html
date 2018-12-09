@@ -5,7 +5,7 @@
             <course-image
                 [url]="selectedItem.url">
             </course-image>
-            <course-nav
+            <course-nav *ngIf="(allItems$ | async | navItems) as navItems"
                 [items]="navItems"
                 (selected)="handleFilterSelection($event)">
             </course-nav>
