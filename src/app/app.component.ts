@@ -44,12 +44,21 @@ export class AppComponent implements OnInit {
     // (it happenes when the property 'items' in the store gets changed)
     // we dispatch the SelectItem action with that item as payload.
     // For that purpose we are using the firstItem selector defined in the items reducer.
-    this.store.select(firstItem)
+    this.handleFirstItemChange(
+      this.store.select(firstItem),
+      this.handleItemSelection.bind(this)
+    ).subscribe();
+  }
+
+  private handleFirstItemChange(
+      firstItem$: Observable<Item>,
+      cbFn: (item: Item) => void
+  ): Observable<Item> {
+    return firstItem$
       .pipe(
         filter(item => item !== undefined),
-        tap(item => this.handleItemSelection(item))
-      )
-      .subscribe();
+        tap(item => cbFn(item))
+      );
   }
 
   handleFilterSelection(itemType: ItemType): void {
