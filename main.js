@@ -630,7 +630,7 @@ var DataService = /** @class */ (function () {
         this.http = http;
     }
     DataService.prototype.getData = function () {
-        return this.http.get('/assets/json/items.json')
+        return this.http.get('assets/json/items.json')
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('items'));
     };
     DataService = __decorate([
