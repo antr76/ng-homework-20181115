@@ -61,6 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_db_db_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/db/db-data */ "./src/app/shared/db/db-data.ts");
 /* harmony import */ var _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/actions/items.action */ "./src/app/store/actions/items.action.ts");
 /* harmony import */ var _store_actions_selected_item_action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/actions/selected-item.action */ "./src/app/store/actions/selected-item.action.ts");
+/* harmony import */ var _store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/reducers/items.reducer */ "./src/app/store/reducers/items.reducer.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -76,24 +77,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
     function AppComponent(store) {
         this.store = store;
     }
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // By default all items should be shown.
         // We dispatch LoadItemsPending action which retrieves
-        // all items for filter criteria 'all'.
-        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["LoadItemsPending"]('all'));
+        // all items.
+        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["LoadItemsPending"]());
         // Store contains already filtered items as the key 'items'
         this.filteredItems$ = this.store.select('items');
         // Store contains currently selected item as the key 'selectedItem'
         this.selectedItem$ = this.store.select('selectedItem');
+        // Each time when firstItem gets changed in the store
+        // (it happenes when the property items in the store gets changed)
+        // we dispatch the SelectItem action with that item.
+        // For that purpose we are using the firstItem selector defined in the items.reducer.ts file.
+        this.store.select(_store_reducers_items_reducer__WEBPACK_IMPORTED_MODULE_6__["firstItem"])
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (item) { return _this.handleItemSelection(item); }))
+            .subscribe();
         this.navItems = this.getDistinctFilterItems();
     };
     AppComponent.prototype.handleFilterSelection = function (itemType) {
-        // If filter criteria has been changed we dispatch the LoadItemsPending action
-        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["LoadItemsPending"](itemType));
+        // If filter criteria has been changed we dispatch the FilterItems action
+        this.store.dispatch(new _store_actions_items_action__WEBPACK_IMPORTED_MODULE_4__["FilterItems"](itemType));
     };
     AppComponent.prototype.handleItemSelection = function (selectedItem) {
         // If selected item has been changed we dispatch the SelectItem action
@@ -773,17 +783,23 @@ var SocialInfoComponent = /** @class */ (function () {
 /*!***********************************************!*\
   !*** ./src/app/store/actions/items.action.ts ***!
   \***********************************************/
-/*! exports provided: LOAD_ITEMS_PENDING, LOAD_ITEMS_SUCCESS, LoadItemsSuccess, LoadItemsPending */
+/*! exports provided: LOAD_ITEMS_PENDING, LOAD_ITEMS_SUCCESS, FILTER_ITEMS, ITEMS_FILTERED, LoadItemsSuccess, LoadItemsPending, FilterItems, ItemsFiltered */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_ITEMS_PENDING", function() { return LOAD_ITEMS_PENDING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_ITEMS_SUCCESS", function() { return LOAD_ITEMS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FILTER_ITEMS", function() { return FILTER_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ITEMS_FILTERED", function() { return ITEMS_FILTERED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadItemsSuccess", function() { return LoadItemsSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadItemsPending", function() { return LoadItemsPending; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilterItems", function() { return FilterItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ItemsFiltered", function() { return ItemsFiltered; });
 var LOAD_ITEMS_PENDING = 'LOAD_ITEMS_PENDING';
 var LOAD_ITEMS_SUCCESS = 'LOAD_ITEMS_SUCCESS';
+var FILTER_ITEMS = 'FILTER_ITEMS';
+var ITEMS_FILTERED = 'ITEMS_FILTERED';
 var LoadItemsSuccess = /** @class */ (function () {
     function LoadItemsSuccess(items) {
         this.items = items;
@@ -793,11 +809,26 @@ var LoadItemsSuccess = /** @class */ (function () {
 }());
 
 var LoadItemsPending = /** @class */ (function () {
-    function LoadItemsPending(itemType) {
-        this.itemType = itemType;
+    function LoadItemsPending() {
         this.type = LOAD_ITEMS_PENDING;
     }
     return LoadItemsPending;
+}());
+
+var FilterItems = /** @class */ (function () {
+    function FilterItems(itemType) {
+        this.itemType = itemType;
+        this.type = FILTER_ITEMS;
+    }
+    return FilterItems;
+}());
+
+var ItemsFiltered = /** @class */ (function () {
+    function ItemsFiltered(items) {
+        this.items = items;
+        this.type = ITEMS_FILTERED;
+    }
+    return ItemsFiltered;
 }());
 
 
@@ -840,11 +871,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ItemsEffects", function() { return ItemsEffects; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
 /* harmony import */ var _shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/db/db-data */ "./src/app/shared/db/db-data.ts");
 /* harmony import */ var _actions_items_action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/items.action */ "./src/app/store/actions/items.action.ts");
-/* harmony import */ var _actions_selected_item_action__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/selected-item.action */ "./src/app/store/actions/selected-item.action.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -860,47 +890,46 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var ItemsEffects = /** @class */ (function () {
     function ItemsEffects(actions$) {
         this.actions$ = actions$;
+        this.allItems = _shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__["allItems"];
         this.initialize();
     }
     ItemsEffects.prototype.initialize = function () {
         var _this = this;
-        var filteredItems$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions_items_action__WEBPACK_IMPORTED_MODULE_5__["LOAD_ITEMS_PENDING"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["pluck"])('itemType'), 
+        this.loadItemsSuccess$ = this.actions$
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["ofType"])(_actions_items_action__WEBPACK_IMPORTED_MODULE_5__["LOAD_ITEMS_PENDING"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function () { return _this.loadItems(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (items) { return _this.allItems = items; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (items) { return console.log('all items emitted new value: ', items); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (items) { return _this.mapToLoadItemSuccess(items); }));
+        this.itemsFiltered$ = this.actions$
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["ofType"])(_actions_items_action__WEBPACK_IMPORTED_MODULE_5__["FILTER_ITEMS"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('itemType'), 
         // ignore if itemType has the same value (multiple clicks to the same filter)
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (itemType) { return _this.loadAndFilterItems(itemType); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (filteredItems) { return console.log('filtered items emitted new value: ', filteredItems); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["shareReplay"])());
-        this.loadItemsSuccess$ = filteredItems$
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (filteredItems) { return _this.mapToLoadItemsSuccess(filteredItems); }));
-        this.selectItem$ = filteredItems$
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (items) { return _this.findItem(0, items); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (firstItem) { return console.log('first item emitted new value: ', firstItem); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (firstItem) { return _this.mapToSelectItem(firstItem); }));
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (itemType) { return _this.filterItems(itemType); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(function (filteredItems) { return console.log('filtered items emitted new value: ', filteredItems); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (filteredItems) { return _this.mapToItemsFiltered(filteredItems); }));
     };
-    ItemsEffects.prototype.mapToLoadItemsSuccess = function (items) {
+    ItemsEffects.prototype.mapToLoadItemSuccess = function (items) {
         return new _actions_items_action__WEBPACK_IMPORTED_MODULE_5__["LoadItemsSuccess"](items);
     };
-    ItemsEffects.prototype.mapToSelectItem = function (item) {
-        return new _actions_selected_item_action__WEBPACK_IMPORTED_MODULE_6__["SelectItem"](item);
+    ItemsEffects.prototype.mapToItemsFiltered = function (items) {
+        return new _actions_items_action__WEBPACK_IMPORTED_MODULE_5__["ItemsFiltered"](items);
     };
-    ItemsEffects.prototype.loadAndFilterItems = function (itemType) {
-        var filteredItems = _shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__["allItems"].filter(function (item) { return [item.type, 'all'].includes(itemType); });
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(filteredItems);
+    ItemsEffects.prototype.loadItems = function () {
+        // todo retrieve items by using httpClient service
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(_shared_db_db_data__WEBPACK_IMPORTED_MODULE_4__["allItems"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["delay"])(500));
     };
-    ItemsEffects.prototype.findItem = function (itemIndex, items) {
-        return items[itemIndex];
+    ItemsEffects.prototype.filterItems = function (itemType) {
+        var items = this.allItems;
+        return items.filter(function (item) { return [item.type, 'all'].includes(itemType); });
     };
     __decorate([
-        Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
-        __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"])
+        Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Effect"])(),
+        __metadata("design:type", Object)
     ], ItemsEffects.prototype, "loadItemsSuccess$", void 0);
     __decorate([
-        Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
+        Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Effect"])(),
         __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"])
-    ], ItemsEffects.prototype, "selectItem$", void 0);
+    ], ItemsEffects.prototype, "itemsFiltered$", void 0);
     ItemsEffects = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"]])
+        __metadata("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Actions"]])
     ], ItemsEffects);
     return ItemsEffects;
 }());
@@ -935,24 +964,30 @@ var reducers = {
 /*!*************************************************!*\
   !*** ./src/app/store/reducers/items.reducer.ts ***!
   \*************************************************/
-/*! exports provided: itemsReducer */
+/*! exports provided: itemsReducer, firstItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "itemsReducer", function() { return itemsReducer; });
-/* harmony import */ var _actions_items_action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/items.action */ "./src/app/store/actions/items.action.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firstItem", function() { return firstItem; });
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _actions_items_action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/items.action */ "./src/app/store/actions/items.action.ts");
+
 
 var initialState = [];
 function itemsReducer(state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
-        case _actions_items_action__WEBPACK_IMPORTED_MODULE_0__["LOAD_ITEMS_SUCCESS"]:
+        case _actions_items_action__WEBPACK_IMPORTED_MODULE_1__["LOAD_ITEMS_SUCCESS"]:
+        case _actions_items_action__WEBPACK_IMPORTED_MODULE_1__["ITEMS_FILTERED"]:
             return action.items;
         default:
             return state;
     }
 }
+var filteredItemsSelector = function (state) { return state.items; };
+var firstItem = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createSelector"])(filteredItemsSelector, function (items) { return items[0]; });
 
 
 /***/ }),
