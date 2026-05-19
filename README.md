@@ -1,27 +1,35 @@
-# NgHomework
+# NgHomework – Travel Destination Widget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
+Angular 7 homework project (2018-11-15). Browse and filter travel destinations (hotels, fishing spots, tours) with weather and social-media stats per destination. Uses RxJS for reactive state management.
 
-## Development server
+> **Note:** Angular 7 is EOL. This project is a learning reference only.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Key features
 
-## Code scaffolding
+- Filter destinations by category (All / Hotel / Fishing / Tours)
+- Featured image, weather (air & water temp), and social stats for the selected item
+- Custom `PhoneNumberPipe` for phone number formatting
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Project structure
 
-## Build
+```
+src/app/
+├── app.component.*      Root component
+├── app.service.ts       RxJS filter & selection state
+├── nav/                 Category filter bar
+├── items/item/          Destination list & cards
+├── image/               Featured image
+├── weather-info/        Weather widget
+├── social-info/         Social stats widget
+└── shared/              Mock data & interfaces
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Quick start
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+yarn install             # install dependencies
+ng serve                 # dev server → http://localhost:4200
+ng build --prod          # production build → dist/
+ng test                  # unit tests (Karma)
+ng e2e                   # e2e tests (Protractor)
+```
